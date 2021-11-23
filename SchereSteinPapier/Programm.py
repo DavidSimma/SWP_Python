@@ -1,22 +1,36 @@
 import random
-print("Schere, Stein oder Papier")
-sachen = {1:"Schere", 2:"Stein", 3:"Papier"}
-ein = input("Ihre Wahl: ")
-ein2 = 0
+if __name__ == "__main__":
+    print("Schere, Stein oder Papier!")
 
-if ein == "Schere":
-    ein2 = 1
-if ein == "Stein":
-    ein2 = 2
-if ein == "Papier":
-    ein2 = 3
+    def eingabe(values):
+        eingabe = input("Schere, Stein oder Papier: ")
+        if eingabe in values:
+            return eingabe
+        else:
+            print("Falsche Eingabe!")
 
-gegner = random.choice(list(sachen.keys()))
-if ein2 > gegner:
-    print("Gewonnen")
-elif ein2 == 1 & ein2 == 3:
-    print("Verloren")
-elif ein2 == gegner:
-    print("unentschieden")
-else:
-    print("Verloren")
+    def weiter():
+        while True:
+            inp = input("Weiterspielen? [y/n]")
+            if inp == 'y':
+                return True
+            elif inp == 'n':
+                print("Das Spiel ist vorbei!")
+                return False
+
+    def compare(spieler, bot, value, result):
+        print("Bot:" + bot)
+        print("Spieler:" + spieler)
+        erg = value[spieler] - value[bot]
+        return result[erg % 3]
+
+    status = True
+    while status:
+        if status == 1:
+            werte = ["Schere", "Stein", "Papier"]
+            comparevalues = {"Schere": 2, "Stein": 0, "Papier": 1}
+            result = ["Unentschieden", "Gewonnen", "Verloren"]
+            spielerwahl = eingabe(werte)
+            bot = random.choice(werte)
+            print(compare(spielerwahl, bot, comparevalues, result))
+            status = weiter()
