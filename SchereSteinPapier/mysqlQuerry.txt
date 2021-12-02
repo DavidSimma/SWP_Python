@@ -1,0 +1,3 @@
+create database schereSteinPapier;
+use schereSteinPapier;
+create table results(schere int, stein int, papier int, lizard int, spock int, Gewonnen int, Verloren int, Unentschieden int); 
