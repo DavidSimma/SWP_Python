@@ -29,7 +29,7 @@ if __name__ == "__main__":
     class Company:
         departments = []
 
-    
+
     e1 = Employee("Sebi", "Rimml", 19, False, 1800)
     e2 = Employee("Daniel", "Niederhauser", 18, True, 2400)
     l1 = Leader("David", "Simma", 18, True, 3200)
@@ -37,28 +37,33 @@ if __name__ == "__main__":
     d1.leader = l1
     d1.employees.append([e1, e2])
     c1 = Company()
-    c1.departments.append([d1])
+    c1.departments.append(d1)
 
 
     def countDeps(com=Company()):
         return com.departments.count()
 
 
+    def returnAllEmp(com=Company()):
+        dep=[x for x in com.departments]
+        emp=[]
+        for a in dep:
+            emp=[b for b in a.employees]
+        return emp
+
     def countEmp(com=Company()):
         count = 0
         for d in com.departments:
-            for e in d:
-                for a in e.employees:
-                    count += len(a)
+            for a in d.employees:
+                count += len(a)
         return count
 
 
     def countLead(com=Company()):
         count = 0
         for d in com.departments:
-            for e in d:
-                if e.leader is not None:
-                    count += 1
+            if d.leader is not None:
+                count += 1
         return count
 
 
@@ -67,15 +72,15 @@ if __name__ == "__main__":
         bigCount = 0
         dep = None
         for d in com.departments:
-            for e in d:
-                if e.leader is not None:
-                    count += 1
-                for a in e.employees:
-                    count += len(a)
-                if bigCount < count:
-                    bigCount = count
-                    dep = e
-                count = 0
+
+            if d.leader is not None:
+                count += 1
+            for a in d.employees:
+                count += len(a)
+            if bigCount < count:
+                bigCount = count
+                dep = d
+            count = 0
         return dep.name
 
 
@@ -83,16 +88,15 @@ if __name__ == "__main__":
         ges = 0
         count = 0
         for d in com.departments:
-            for e in d:
-                if e.leader is not None:
-                    if e.leader.isMale:
+            if d.leader is not None:
+                if d.leader.isMale:
+                    count += 1
+                ges += 1
+            for a in d.employees:
+                for b in a:
+                    if b.isMale:
                         count += 1
                     ges += 1
-                for a in e.employees:
-                    for b in a:
-                        if b.isMale:
-                            count += 1
-                        ges += 1
 
         return count / ges * 100
 
@@ -101,3 +105,7 @@ if __name__ == "__main__":
     print(countLead(c1))
     print(biggestDep(c1))
     print(howManyMen(c1), "%")
+    for x in returnAllEmp(c1):
+        for a in x:
+            print(a.firstname)
+
