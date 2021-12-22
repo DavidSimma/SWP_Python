@@ -1,5 +1,6 @@
 import random
 import mysql.connector
+import requests as requests
 
 if __name__ == "__main__":
     mydb = mysql.connector.connect(host="localhost", user="user", password="user")
@@ -31,6 +32,7 @@ if __name__ == "__main__":
                 print("Das Spiel ist vorbei!")
                 return False
 
+
     def getSqlCreateStatement():
         path = "C:/Users/simma/Desktop/Schulrepositories/SWP_Python/SchereSteinPapier/mysqlQuerry.txt"
         return open(path, "r")
@@ -42,9 +44,27 @@ if __name__ == "__main__":
         #    for x in getSqlCreateStatement():
         #        print(x)
         #        mc.execute(x)
+        #else:
         mc.execute("use schereSteinPapier;")
         mc.execute("insert into results ("+spieler+","+erg+") values(1,1)")
         mydb.commit()
+
+    def apiAufruf(username, anzScheren, anzStein, anzPapier, anzLizard, anzSpock, apiIP="http://127.0.0.1:5000"):
+        url = apiIP + "/v1/updateRecord"
+        url += "?username=" + str(username) + "&voteScissors=" + str(anzScheren) + "&voteRock=" + str(anzStein) + "&votePaper=" +\
+               str(anzPapier) + "&voteSpock=" + str(anzSpock) + "&voteLizard=" + str(anzLizard)
+        responseCode = 0
+        try:
+            response = requests.post(url, None)
+            responseCode = response.status_code
+        except:
+            return 0
+        return responseCode
+
+    def summeVonSpalte(spaltenname):
+        cursor = mydb.cursor()
+        cursor.execute("select sum("+spaltenname+") from results;")
+        return cursor.fetchall()[0][0]
 
     status = True
     while status:
@@ -57,3 +77,9 @@ if __name__ == "__main__":
             erg = compare(spielerwahl, bot, vergleichswerte, result)
             speichern(spielerwahl, erg)
             status = weiter()
+
+    summeVonSpalte("schere")
+    apiAufruf("SimmaDavid", summeVonSpalte("schere"), summeVonSpalte("stein"), summeVonSpalte("papier"), summeVonSpalte("lizard"),
+              summeVonSpalte("spock"))
+
+    mydb.close()
