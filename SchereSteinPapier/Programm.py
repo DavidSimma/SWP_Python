@@ -7,9 +7,9 @@ if __name__ == "__main__":
     mc = mydb.cursor()
     print("Schere, Stein, Papier, Lizard und Spock")
 
-    def eingabe(values):
+    def eingabe(werte):
         eingabe = input("Schere, Stein, Papier, Lizard oder Spock: ").lower()
-        if eingabe in values:
+        if eingabe in werte:
             return eingabe
         else:
             print("Falsche Eingabe!")
@@ -78,8 +78,8 @@ if __name__ == "__main__":
             speichern(spielerwahl, erg)
             status = weiter()
 
-    summeVonSpalte("schere")
-    apiAufruf("SimmaDavid", summeVonSpalte("schere"), summeVonSpalte("stein"), summeVonSpalte("papier"), summeVonSpalte("lizard"),
-              summeVonSpalte("spock"))
+    print(summeVonSpalte("schere"))
+    print(apiAufruf("SimmaDavid", summeVonSpalte("schere"), summeVonSpalte("stein"), summeVonSpalte("papier"),
+              summeVonSpalte("lizard"), summeVonSpalte("spock")))
 
     mydb.close()
