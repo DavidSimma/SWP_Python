@@ -1,91 +1,164 @@
 import random
-if __name__ == "__main__":
-    class VerketteteListe:
-        def __init__(self):
-            self.laenge = 0
-            self.kopf = None
 
-        def insert(self, neueDaten):
-            if self.kopf:
-                letzteDaten = self.kopf
-                while letzteDaten != None:
-                    if letzteDaten.naechster == None:
-                        break
-                    letzteDaten = letzteDaten.naechster
+class VerketteteListe:
+    def __init__(self):
+        self.laenge = 0
+        self.kopf = None
+        self.ende = None
 
-                letzteDaten.naechster = neueDaten
-            else:
-                self.kopf = neueDaten
 
-        def delete(self, delete):
-            if self.kopf != None:
-                temp = self.kopf
-                while temp.naechster != None:
-                    if temp.naechster == delete:
-                        if temp.naechster.naechster != None:
-                            temp.naechster = temp.naechster.naechster
-                        else:
-                            temp.naechster = None
-                    temp = temp.naechster
+    def insertAtEnd(self, neueDaten):
+        if self.ende:
+            vorletzteDaten = self.ende
+            vorletzteDaten.naechster = neueDaten
+            vorletzteDaten.naechster.vorher = vorletzteDaten
+            self.ende = vorletzteDaten.naechster
+        else:
+            self.ende = neueDaten
+            self.kopf = neueDaten
 
-        def insertAtPoint(self, beforeD, newD):
-            if self.kopf != None:
-                temp = self.kopf
-                while temp.naechster != None:
-                    if temp == beforeD:
-                        temp2 = temp.naechster
-                        temp.naechster = newD
-                        temp.naechster.naechster = temp2
-                        break
-                    temp = temp.naechster
+    def insertAtStart(self, neueDaten):
+        if self.kopf:
+            zweiter = self.kopf
+            zweiter.vorher = neueDaten
+            zweiter.vorher.naechster = zweiter
+            self.kopf = zweiter.vorher
+        else:
+            self.ende = neueDaten
+            self.kopf = neueDaten
 
-        def returnAll(self):
-            if self.kopf:
-                print(self.kopf.wert)
-                temp = self.kopf
-                while temp.naechster != None:
-                    temp = temp.naechster
-                    print(temp.wert)
+    def deleteAfter(self, delete):
+        if self.kopf != None:
+            temp = self.kopf
+            while temp.naechster != None:
+                if temp == delete:
+                    if temp.naechster.naechster != None:
+                        temp.naechster = temp.naechster.naechster
+                        temp.naechster.vorher = temp
+                    else:
+                        temp.naechster = None
+                    return
+                temp = temp.naechster
 
-        def returnLength(self):
-            self.laenge = 0
-            if self.kopf != None:
+    def deleteBefore(self, delete):
+        if self.ende != None:
+            temp = self.ende
+            while temp.vorher != None:
+                if temp == delete:
+                    if temp.vorher.vorher != None:
+                        temp.vorher = temp.vorher.vorher
+                        temp.vorher.naechster = temp
+                    else:
+                        temp.vorher = None
+                    return
+                temp = temp.vorher
+
+    def insertAfter(self, beforeD, newD):
+        if self.kopf != None:
+            temp = self.kopf
+            while temp.naechster != None:
+                if temp == beforeD:
+                    temp2 = temp.naechster
+                    temp.naechster = newD
+                    temp.naechster.naechster = temp2
+                    break
+                temp = temp.naechster
+
+    def insertBefore(self, afterD, newD):
+        if self.kopf != None:
+            temp = self.kopf
+            while temp.naechster != None:
+                if temp == beforeD:
+                    temp2 = temp.naechster
+                    temp.naechster = newD
+                    temp.naechster.naechster = temp2
+                    break
+                temp = temp.naechster
+
+    def returnAllAsc(self):
+        if self.kopf:
+            print(self.kopf.wert)
+            temp = self.kopf
+            while temp.naechster != None:
+                temp = temp.naechster
+                print(temp.wert)
+
+
+    def returnAllDesc(self):
+        if self.ende:
+            print(self.ende.wert)
+            temp = self.ende
+            while temp.vorher != None:
+                temp = temp.vorher
+                print(temp.wert)
+
+
+
+    def returnLength(self):
+        self.laenge = 0
+        if self.kopf != None:
+            self.laenge += 1
+            temp = self.kopf
+            while temp.naechster != None:
                 self.laenge += 1
-                temp = self.kopf
-                while temp.naechster != None:
-                    self.laenge += 1
-                    temp = temp.naechster
-                print(self.laenge)
+                temp = temp.naechster
+        return self.laenge
+
+    def find(self, obj):
+        temp = self.kopf
+        num = 0
+        while temp.naechster != None:
+            num += 1
+
+            if temp == obj:
+                return "Objekt befindet sich an der Stelle: " + str(num)
+            temp = temp.naechster
+            if temp.naechster == None:
+                return "Objekt befindet sich an der Stelle: " + str(num+1)
+        return "Dieses Objekt existiert nicht"
 
 
-    class Daten:
-        def __init__(self, wert = 0):
-            self.wert = wert
-            self.naechster = None
+class Daten:
+    def __init__(self, wert = 0):
+        self.vorher = None
+        self.wert = wert
+        self.naechster = None
 
+if __name__ == "__main__":
 
-    d1 = Daten(random.randint(0, 10))
-    d2 = Daten(random.randint(0, 10))
-    d3 = Daten(random.randint(0, 10))
+    d1 = Daten(random.randint(0, 30))
+    d2 = Daten(random.randint(0, 30))
+    d3 = Daten(random.randint(0, 30))
+    d4 = Daten(random.randint(0, 30))
 
     v1 = VerketteteListe()
-    v1.insert(d1)
-    v1.insert(d2)
-    v1.insert(d3)
+    print(v1.returnAllAsc())
+    v1.insertAtEnd(d1)
+    v1.insertAtEnd(d2)
+    v1.insertAtEnd(d3)
 
-    print("Ausgabe aller Daten:")
-    print(v1.returnAll())
+    print("Ausgabe aller Daten 1:")
+    print(v1.returnAllDesc())
     print()
 
-    v1.delete(d2)
-    print("Ausgabe aller Daten neu:")
-    print(v1.returnAll())
+    print("Objekt finden: ")
+    print(v1.find(d3))
     print()
 
-    v1.insertAtPoint(d1, Daten(random.randint(0,10)))
-    print("Ausgabe aller Daten neuneu:")
-    print(v1.returnAll())
+    v1.insertAtStart(d4)
+    print("Ausgabe aller Daten 1.1")
+    print(v1.returnAllAsc())
+    print()
+
+    v1.deleteAfter(d2)
+    print("Ausgabe aller Daten 1.2:")
+    print(v1.returnAllAsc())
+    print()
+
+    v1.insertAfter(d1, Daten(random.randint(0,10)))
+    print("Ausgabe aller Daten 1.3:")
+    print(v1.returnAllAsc())
     print()
 
     print("Ausgabe der Anzahl aller Daten:")
-    v1.returnLength()
+    print(v1.returnLength())
