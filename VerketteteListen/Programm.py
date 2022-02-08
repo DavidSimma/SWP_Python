@@ -54,26 +54,47 @@ class VerketteteListe:
                 temp = temp.vorher
 
     def insertAfter(self, beforeD, newD):
-        if self.kopf != None:
-            temp = self.kopf
-            while temp.naechster != None:
-                if temp == beforeD:
-                    temp2 = temp.naechster
-                    temp.naechster = newD
-                    temp.naechster.naechster = temp2
-                    break
-                temp = temp.naechster
+        if self.ende == beforeD:
+            temp3 = self.ende
+            self.ende = newD
+            self.ende.vorher = temp3
+            self.ende.vorher.naechster = self.ende
+        else:
+            if self.kopf != None:
+                temp = self.kopf
+                while temp.naechster != None:
+                    if temp == beforeD:
+                        temp2 = temp.naechster
+                        temp.naechster = newD
+                        temp.naechster.naechster = temp2
+                        if temp.naechster.naechster != None:
+                            temp.naechster.naechster.vorher = temp.naechster
+                        else:
+                            self.ende = temp.naechster
+                        temp.naechster.vorher = temp
+                        break
+                    temp = temp.naechster
 
     def insertBefore(self, afterD, newD):
-        if self.kopf != None:
-            temp = self.kopf
-            while temp.naechster != None:
-                if temp == beforeD:
-                    temp2 = temp.naechster
-                    temp.naechster = newD
-                    temp.naechster.naechster = temp2
-                    break
-                temp = temp.naechster
+        if self.kopf == afterD:
+            temp3 = self.kopf
+            self.kopf = newD
+            self.kopf.naechster = temp3
+            self.kopf.naechster.vorher = self.kopf
+        else:
+            if self.ende != None:
+                temp = self.ende
+                while temp.vorher != None:
+                    if temp == afterD:
+                        temp2 = temp.vorher
+                        temp.vorher = newD
+                        temp.vorher.naechster = temp
+                        temp.vorher.vorher = temp2
+                        if temp.vorher.vorher != None:
+                            temp.vorher.vorher.naechster = temp.vorher
+
+                        break
+                    temp = temp.vorher
 
     def returnAllAsc(self):
         if self.kopf:
@@ -104,7 +125,7 @@ class VerketteteListe:
                 temp = temp.naechster
         return self.laenge
 
-    def find(self, obj):
+    def findByObj(self, obj):
         temp = self.kopf
         num = 0
         while temp.naechster != None:
@@ -117,6 +138,36 @@ class VerketteteListe:
                 return "Objekt befindet sich an der Stelle: " + str(num+1)
         return "Dieses Objekt existiert nicht"
 
+    def findByIndex(self, index):
+        temp = self.kopf
+        num = 0
+        while temp.naechster != None:
+            num += 1
+
+            if num == index:
+                return temp
+            temp = temp.naechster
+            if temp.naechster == None:
+                return self.ende
+        return "Dieses Objekt existiert nicht"
+
+    def sortAsc(self):
+        for i in range(2, self.returnLength()):
+            temp = self.findByIndex(i)
+            temp2 = temp.vorher
+            while temp.wert < temp2.wert:
+                if temp2.vorher != None:
+                    temp2 = temp2.vorher
+            self.insertAfter(temp2, temp)
+            self.deleteAfter(temp2)
+
+
+
+
+    def sortDesc(self):
+        pass
+
+
 
 class Daten:
     def __init__(self, wert = 0):
@@ -125,40 +176,15 @@ class Daten:
         self.naechster = None
 
 if __name__ == "__main__":
-
-    d1 = Daten(random.randint(0, 30))
-    d2 = Daten(random.randint(0, 30))
-    d3 = Daten(random.randint(0, 30))
-    d4 = Daten(random.randint(0, 30))
-
     v1 = VerketteteListe()
-    print(v1.returnAllAsc())
-    v1.insertAtEnd(d1)
-    v1.insertAtEnd(d2)
-    v1.insertAtEnd(d3)
+    for i in range(0, 5):
+        v1.insertAtEnd(Daten(random.randint(0,30)))
 
-    print("Ausgabe aller Daten 1:")
-    print(v1.returnAllDesc())
-    print()
-
-    print("Objekt finden: ")
-    print(v1.find(d3))
-    print()
-
-    v1.insertAtStart(d4)
-    print("Ausgabe aller Daten 1.1")
+    print("Ausgabe aller Daten:")
     print(v1.returnAllAsc())
     print()
 
-    v1.deleteAfter(d2)
-    print("Ausgabe aller Daten 1.2:")
+    print("Sortieren ASC: ")
+    v1.sortAsc()
     print(v1.returnAllAsc())
     print()
-
-    v1.insertAfter(d1, Daten(random.randint(0,10)))
-    print("Ausgabe aller Daten 1.3:")
-    print(v1.returnAllAsc())
-    print()
-
-    print("Ausgabe der Anzahl aller Daten:")
-    print(v1.returnLength())
