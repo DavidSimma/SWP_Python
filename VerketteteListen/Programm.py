@@ -1,11 +1,91 @@
 import random
 
+class ArrayListe:
+
+    def __init__(self):
+        self.liste = []
+
+    #--------------------------Einfügen-------------------------------
+
+    def insertAtEnd(self, neueDaten):
+        self.liste.append(neueDaten)
+    def insertAtStart(self, neueDaten):
+        self.liste.insert(0, neueDaten)
+
+    #--------------------------Löschen-------------------------------
+
+    def deleteByIndex(self, index):
+        self.liste.pop(index)
+    def deleteAfterIndex(self, index):
+        if len(self.liste) > index+1:
+            self.liste.pop(index+1)
+    def deleteBeforeIndex(self, index):
+        if index-1 >= 0:
+            self.liste.pop(index-1)
+
+    #--------------------------Einfügen an Punkt-------------------------------
+
+    def insertAtPoint(self, index, newD):
+        self.liste.insert(index, newD)
+    def insertAfter(self, index, newD):
+        self.liste.insert(index+1, newD)
+    def insertBefore(self, index, newD):
+        if index-1 >= 0:
+            self.liste.insert(index-1, newD)
+
+    #--------------------------Wiedergabe-------------------------------
+
+    def returnAllAsc(self):
+        for i in self.liste:
+            print(i)
+    def returnAllDesc(self):
+        for i in reversed(self.liste):
+            print(i)
+
+    #--------------------------Length-------------------------------
+
+    def returnLength(self):
+        return len(self.liste)
+
+    #--------------------------Find-------------------------------
+
+    def findByObj(self, obj):
+        indexes = []
+        for i in range(0, len(self.liste)):
+            if self.liste[i] == obj:
+                indexes.append(i)
+        return indexes
+    def findByIndex(self, index):
+        return self.liste[index]
+
+    #--------------------------Insertionsort-------------------------------
+
+    def sortAsc(self):
+        for i in self.liste:
+            j = self.liste.index(i)
+            while j>0:
+                if self.liste[j-1] > self.liste[j]:
+                    self.liste[j-1],self.liste[j] = self.liste[j],self.liste[j-1]
+                else:
+                    break
+                j -= 1
+    def sortDesc(self):
+        for i in self.liste:
+            j = self.liste.index(i)
+            while j>0:
+                if self.liste[j-1] < self.liste[j]:
+                    self.liste[j-1],self.liste[j] = self.liste[j],self.liste[j-1]
+                else:
+                    break
+                j -= 1
+
 class VerketteteListe:
     def __init__(self):
         self.laenge = 0
         self.kopf = None
         self.ende = None
 
+    #--------------------------Einfügen-------------------------------
 
     def insertAtEnd(self, neueDaten):
         if self.ende:
@@ -26,6 +106,8 @@ class VerketteteListe:
         else:
             self.ende = neueDaten
             self.kopf = neueDaten
+
+    #--------------------------Löschen-------------------------------
 
     def deleteAfter(self, delete):
         if self.kopf != None:
@@ -52,6 +134,8 @@ class VerketteteListe:
                         temp.vorher = None
                     return
                 temp = temp.vorher
+
+    #--------------------------Einfügen an Punkt-------------------------------
 
     def insertAfter(self, beforeD, newD):
         if self.ende == beforeD:
@@ -96,6 +180,8 @@ class VerketteteListe:
                         break
                     temp = temp.vorher
 
+    #--------------------------Wiedergabe-------------------------------
+
     def returnAllAsc(self):
         if self.kopf:
             print(self.kopf.wert)
@@ -113,7 +199,7 @@ class VerketteteListe:
                 temp = temp.vorher
                 print(temp.wert)
 
-
+    #--------------------------Length-------------------------------
 
     def returnLength(self):
         self.laenge = 0
@@ -124,6 +210,8 @@ class VerketteteListe:
                 self.laenge += 1
                 temp = temp.naechster
         return self.laenge
+
+    #--------------------------Find-------------------------------
 
     def findByObj(self, obj):
         temp = self.kopf
@@ -151,23 +239,31 @@ class VerketteteListe:
                 return self.ende
         return "Dieses Objekt existiert nicht"
 
+    #--------------------------Insertionsort-------------------------------
+
     def sortAsc(self):
-        for i in range(2, self.returnLength()):
+        o = self.returnLength()
+        for i in range(2, o+1):
             temp = self.findByIndex(i)
-            temp2 = temp.vorher
-            while temp.wert < temp2.wert:
-                if temp2.vorher != None:
-                    temp2 = temp2.vorher
-            self.insertAfter(temp2, temp)
-            self.deleteAfter(temp2)
-
-
-
+            j = i-1
+            while j >= 1 and temp.wert < self.findByIndex(j).wert:
+                temp3 = self.findByIndex(j)
+                self.insertBefore(temp3, Daten(temp.wert))
+                temp4 = self.findByIndex(j+1)
+                self.deleteAfter(temp4)
+                j-=1
 
     def sortDesc(self):
-        pass
-
-
+        o = self.returnLength()
+        for i in range(2, o+1):
+            temp = self.findByIndex(i)
+            j = i-1
+            while j >= 1 and temp.wert > self.findByIndex(j).wert:
+                temp3 = self.findByIndex(j)
+                self.insertBefore(temp3, Daten(temp.wert))
+                temp4 = self.findByIndex(j+1)
+                self.deleteAfter(temp4)
+                j-=1
 
 class Daten:
     def __init__(self, wert = 0):
@@ -175,16 +271,25 @@ class Daten:
         self.wert = wert
         self.naechster = None
 
+
 if __name__ == "__main__":
+
+    a1 = ArrayListe()
     v1 = VerketteteListe()
+
     for i in range(0, 5):
-        v1.insertAtEnd(Daten(random.randint(0,30)))
-
-    print("Ausgabe aller Daten:")
-    print(v1.returnAllAsc())
+        a1.insertAtEnd(random.randint(0,50))
+    a1.returnAllDesc()
     print()
 
-    print("Sortieren ASC: ")
-    v1.sortAsc()
-    print(v1.returnAllAsc())
-    print()
+    a1.sortDesc()
+    a1.returnAllAsc()
+
+    #print("Ausgabe aller Daten:")
+    #print(v1.returnAllAsc())
+    #print()
+#
+    #print("Sortieren DESC: ")
+    #v1.sortDesc()
+    #v1.returnAllAsc()
+    #print()
