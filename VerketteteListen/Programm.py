@@ -1,4 +1,6 @@
 import random
+import time
+
 
 class ArrayListe:
 
@@ -277,19 +279,23 @@ if __name__ == "__main__":
     a1 = ArrayListe()
     v1 = VerketteteListe()
 
-    for i in range(0, 5):
-        a1.insertAtEnd(random.randint(0,50))
-    a1.returnAllDesc()
-    print()
+    anzahl = int(input("Wie viele Elemente sollen erzeugt werden: "))
+    if anzahl > 0:
+        print("Elemente erzeugen")
+        for i in range(0, anzahl):
+            temp = random.randint(0, anzahl)
+            v1.insertAtEnd(Daten(temp))
+            a1.insertAtEnd(temp)
+        print("Elemente erzeugt")
 
-    a1.sortDesc()
-    a1.returnAllAsc()
+        print("Beginne Sortieren")
+        startzeitV = time.time()
+        v1.sortAsc()
+        endzeitV = time.time()
+        print("Das Sortieren der verketteten Liste hat ", endzeitV-startzeitV, " Sekunden gebraucht")
 
-    #print("Ausgabe aller Daten:")
-    #print(v1.returnAllAsc())
-    #print()
-#
-    #print("Sortieren DESC: ")
-    #v1.sortDesc()
-    #v1.returnAllAsc()
-    #print()
+        startzeitA = time.time()
+        a1.sortAsc()
+        endzeitA = time.time()
+        print("Das Sortieren der Array Liste hat ", endzeitA-startzeitA, " Sekunden gebraucht")
+
