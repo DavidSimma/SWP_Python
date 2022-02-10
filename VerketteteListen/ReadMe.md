@@ -10,3 +10,10 @@ Das Programm wurde in der Entwicklungsumgebung IntelliJ entwickelt, lässt sich 
 Nach dem Ausführen des Programms wird der Benutzer aufgefordert, die Anzahl der zu erstellenden Elemente anzugeben. Diese Eingabe muss eine Ganzzahl sein! Anschließend werden z.B. 100 zufällige Elemente erzeugt, welche jeweils von einer Spanne von 0 bis (der eingegebenen Zahl) variieren können. Diese Zahlen werden nun sowohl in eine doppelt-verkettete Liste als auch in eine Arrayliste eingefügt. Nun beginnt das Sortieren der Zahlen. Es wird sowohl die Dauer der Sortierung mittels Insertionsort Verfahren bei der doppelt-verketteten Liste, als auch der Arraylist in Sekunden gemessen. Die gemessenen Zeiten werden dann wiedergegeben.
 
 <h3>Aufwandsklassen</h3>
+
+| Methode | Aufwandklasse doppelt-verkettete Liste | Aufwandsklasse Arraylist |
+| --- | --- | --- |
+| insertAtEnd() | n | n + 1 |
+| insertAtStart() | n | n + 1 |
+| deleteAfter() | n | |
+| deleteBefore() | n | |
