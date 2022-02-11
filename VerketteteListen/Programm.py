@@ -287,6 +287,7 @@ if __name__ == "__main__":
             v1.insertAtEnd(Daten(temp))
             a1.insertAtEnd(temp)
         print("Elemente erzeugt")
+        
 
         print("Beginne Sortieren")
         startzeitV = time.time()
