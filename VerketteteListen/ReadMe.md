@@ -15,5 +15,14 @@ Nach dem Ausführen des Programms wird der Benutzer aufgefordert, die Anzahl der
 | --- | --- | --- |
 | insertAtEnd() | n | n + 1 |
 | insertAtStart() | n | n + 1 |
-| deleteAfter() | n | |
-| deleteBefore() | n | |
+| deleteAfter() | n | n |
+| deleteBefore() | n | n |
+| insertAfter() | n | n + 1 |
+| insertBefore() | n | n + 1 |
+| returnAllAsc() | n | n |
+| returnAllDesc() | n | n |
+| returnLength() | n | n |
+| findByIndex() | n | n |
+| findByObject | n | n |
+| sortAsc() | n^8 | n^2 |
+| sortDesc() | n^8 | n^2 |
