@@ -13,8 +13,8 @@ Nach dem Ausführen des Programms wird der Benutzer aufgefordert, die Anzahl der
 
 | Methode | Aufwandklasse doppelt-verkettete Liste | Aufwandsklasse Arraylist |
 | --- | --- | --- |
-| insertAtEnd() | n | n + 1 |
-| insertAtStart() | n | n + 1 |
+| insertAtEnd() | 1 | n + 1 |
+| insertAtStart() | 1 | n + 1 |
 | deleteAfter() | n | n |
 | deleteBefore() | n | n |
 | insertAfter() | n | n + 1 |
