@@ -244,28 +244,34 @@ class VerketteteListe:
     #--------------------------Insertionsort-------------------------------
 
     def sortAsc(self):
-        o = self.returnLength()
-        for i in range(2, o+1):
-            temp = self.findByIndex(i)
-            j = i-1
-            while j >= 1 and temp.wert < self.findByIndex(j).wert:
-                temp3 = self.findByIndex(j)
-                self.insertBefore(temp3, Daten(temp.wert))
-                temp4 = self.findByIndex(j+1)
-                self.deleteAfter(temp4)
-                j-=1
+        if self.kopf == None:
+            return
+        else:
+            temp = self.kopf
+            while temp.naechster != None:
+                index = temp.naechster
+                while index != None:
+                    if temp.wert > index.wert:
+                        temp2 = temp.wert
+                        temp.wert = index.wert
+                        index.wert = temp2
+                    index = index.naechster
+                temp = temp.naechster
 
     def sortDesc(self):
-        o = self.returnLength()
-        for i in range(2, o+1):
-            temp = self.findByIndex(i)
-            j = i-1
-            while j >= 1 and temp.wert > self.findByIndex(j).wert:
-                temp3 = self.findByIndex(j)
-                self.insertBefore(temp3, Daten(temp.wert))
-                temp4 = self.findByIndex(j+1)
-                self.deleteAfter(temp4)
-                j-=1
+        if self.kopf == None:
+            return
+        else:
+            temp = self.kopf
+            while temp.naechster != None:
+                index = temp.naechster
+                while index != None:
+                    if temp.wert < index.wert:
+                        temp2 = temp.wert
+                        temp.wert = index.wert
+                        index.wert = temp2
+                    index = index.naechster
+                temp = temp.naechster
 
 class Daten:
     def __init__(self, wert = 0):
@@ -287,7 +293,8 @@ if __name__ == "__main__":
             v1.insertAtEnd(Daten(temp))
             a1.insertAtEnd(temp)
         print("Elemente erzeugt")
-        
+
+        a1.deleteByIndex(4)
 
         print("Beginne Sortieren")
         startzeitV = time.time()
