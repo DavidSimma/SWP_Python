@@ -24,5 +24,5 @@ Nach dem Ausführen des Programms wird der Benutzer aufgefordert, die Anzahl der
 | returnLength() | n | n |
 | findByIndex() | n | n |
 | findByObject | n | n |
-| sortAsc() | n^8 | n^2 |
-| sortDesc() | n^8 | n^2 |
+| sortAsc() | n^2 | n^2 |
+| sortDesc() | n^2 | n^2 |
