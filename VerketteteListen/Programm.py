@@ -61,25 +61,25 @@ class ArrayListe:
         return self.liste[index]
 
     #--------------------------Insertionsort-------------------------------
-
     def sortAsc(self):
-        for i in self.liste:
-            j = self.liste.index(i)
-            while j>0:
-                if self.liste[j-1] > self.liste[j]:
-                    self.liste[j-1],self.liste[j] = self.liste[j],self.liste[j-1]
-                else:
-                    break
+        for i in range(1, len(self.liste)):
+
+            key = self.liste[i]
+            j = i-1
+            while j >= 0 and key < self.liste[j] :
+                self.liste[j + 1] = self.liste[j]
                 j -= 1
+            self.liste[j + 1] = key
+
     def sortDesc(self):
-        for i in self.liste:
-            j = self.liste.index(i)
-            while j>0:
-                if self.liste[j-1] < self.liste[j]:
-                    self.liste[j-1],self.liste[j] = self.liste[j],self.liste[j-1]
-                else:
-                    break
+        for i in range(1, len(self.liste)):
+
+            key = self.liste[i]
+            j = i-1
+            while j >= 0 and key > self.liste[j] :
+                self.liste[j + 1] = self.liste[j]
                 j -= 1
+            self.liste[j + 1] = key
 
 class VerketteteListe:
     def __init__(self):
@@ -306,4 +306,3 @@ if __name__ == "__main__":
         a1.sortAsc()
         endzeitA = time.time()
         print("Das Sortieren der Array Liste hat ", endzeitA-startzeitA, " Sekunden gebraucht")
-
