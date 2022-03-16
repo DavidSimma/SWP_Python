@@ -12,8 +12,8 @@ Nach dem Ausführen des Programms wird der Benutzer aufgefordert, die Anzahl der
 <h3>Ergebnis des Programms</h3>
 Es wird eine Sammlung von 10.000 Ganzzahlelementen erzeugt. Diese wird in eine Array-Liste und eine doppelt verkettete Liste kopiert. Beide Listen werden von der kleinsten, bis zur größten Zahl sortiert und die dafür benötigte Zeit wird gemessen.<br/><br/>
 <h4>Ergebnisse:</h4>
- - Das Sortieren der doppelt verketteten Liste benötigt etwa zw. 5 und 8 Sekunden  <br/>
- - Das Sortieren der Array-Liste benötigt etwa 0.4 Sekunden  <br/><br/>
+ - Das Sortieren der doppelt verketteten Liste benötigt etwa 10 Sekunden  <br/>
+ - Das Sortieren der Array-Liste benötigt etwa 6 Sekunden  <br/><br/>
 Man erkennt einen merkbaren Unterschied beim Sortieren der beiden Listen, trotz des gleichen Sortierverfahrens und den gleichen Ausgangsdaten!
 
 <h3>Aufwandsklassen</h3>
